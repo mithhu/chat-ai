@@ -11,7 +11,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration)
 
 const appSettings = {
-    databaseURL: 'https://knowitall-openai-9ed49-default-rtdb.asia-southeast1.firebasedatabase.app/'
+    databaseURL: process.env.DATABASE_URL
 }
 
 const app = initializeApp(appSettings)
