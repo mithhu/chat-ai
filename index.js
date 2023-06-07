@@ -1,10 +1,10 @@
-import { Configuration, OpenAIApi } from 'openai'
+// import { Configuration, OpenAIApi } from 'openai'
 
-const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-})
+// const configuration = new Configuration({
+//     apiKey: process.env.OPENAI_API_KEY,
+// })
 
-const openai = new OpenAIApi(configuration)
+// const openai = new OpenAIApi(configuration)
 
 const chatbotConversation = document.getElementById('chatbot-conversation')
  
@@ -24,27 +24,17 @@ document.addEventListener('submit', (e) => {
 }) 
 
 async function fetchReply(){
-/*
-Challenge: 
-    1. Use OpenAI's CLI tool to build a new fine-tuned 
-       model with n_epochs set to 16.
-    🎉 You don't need to prepare the data again!
-    2. Update the model on line 38.
-    3. Test it by asking about We-Wingit's phone number
-       or email, or anything else from the data. 
-*/ 
-    const response = await openai.createCompletion({
-        model: 'davinci:ft-personal-2023-06-06-18-32-09',
-        prompt: conversationStr,
-        presence_penalty: 0,
-        frequency_penalty: 0.3,
-        max_tokens: 100,
-        temperature: 0,
-        stop: ['\n', '->']
+    const url = 'https://hilarious-lollipop-ca35e1.netlify.app/.netlify/functions/fetchAi'
+    
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'content-type': 'text/plain',
+        },
+        body: conversationStr
     })
-    conversationStr += ` ${response.data.choices[0].text} \n`
-    renderTypewriterText(response.data.choices[0].text)
-    console.log(conversationStr)
+    const data = await response.json()
+    console.log(data)
 }
 
 function renderTypewriterText(text) {
