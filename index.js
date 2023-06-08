@@ -1,11 +1,3 @@
-// import { Configuration, OpenAIApi } from 'openai'
-
-// const configuration = new Configuration({
-//     apiKey: process.env.OPENAI_API_KEY,
-// })
-
-// const openai = new OpenAIApi(configuration)
-
 const chatbotConversation = document.getElementById('chatbot-conversation')
  
 let conversationStr = ''
@@ -31,12 +23,17 @@ async function fetchReply(){
         headers: {
             'content-type': 'text/plain',
         },
+        headers: {
+            "Access-Control-Allow-Origin": "*"
+          ,      
         body: conversationStr
     })
     const data = await response.json()
+    conversationStr+=` ${data.reply.choices[0].text} ->`
+    renderTypewriterText(data.reply.choices[0].text)
     console.log(data)
 }
-
+ 
 function renderTypewriterText(text) {
     const newSpeechBubble = document.createElement('div')
     newSpeechBubble.classList.add('speech', 'speech-ai', 'blinking-cursor')
