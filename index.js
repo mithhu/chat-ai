@@ -25,7 +25,7 @@ async function fetchReply(){
         },
         headers: {
             "Access-Control-Allow-Origin": "*"
-          ,      
+        },      
         body: conversationStr
     })
     const data = await response.json()
